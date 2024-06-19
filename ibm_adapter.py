@@ -98,6 +98,9 @@ class ModelAdapter(dl.BaseModelAdapter):
                                           headers)
 
                 res = self.conn_watsonx.getresponse()
+                if res.status != 200:
+                    raise Exception(f"Response from client failed! {res.read()}")
+
                 data = ast.literal_eval(res.read().decode("UTF-8"))
 
                 full_answer = ""
@@ -119,7 +122,8 @@ class ModelAdapter(dl.BaseModelAdapter):
 
 
 if __name__ == '__main__':
-    azure_api_key_name = ''
+    dl.setenv('rc')
+    ibm_api_key_name = ''
     model = dl.models.get(model_id='')
     item = dl.items.get(item_id='')
     adapter = ModelAdapter(model, '')
