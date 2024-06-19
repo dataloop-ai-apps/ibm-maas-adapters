@@ -1,0 +1,155 @@
+{
+  "name": "ibm-api-granite-8b-code-instruct",
+  "displayName": "Granite-8b-code-instruct IBM API",
+  "version": "0.0.1",
+  "scope": "public",
+  "description": "Granite-8b-code-instruct from IBM API - Requires API Key and Project id",
+  "attributes": {
+    "Provider": "IBM",
+    "Category": "Model",
+    "Gen AI": "LLM",
+    "NLP": "Conversational"
+  },
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/ibm-maas-adapters.git",
+    "gitTag": "0.0.1"
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "granite-8b-code-instruct-ibm-deploy",
+        "runtime": {
+          "podType": "regular-xs",
+          "concurrency": 10,
+          "runnerImage": "dataloopai/dtlpy-agent:cpu.py3.10.opencv",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2
+          }
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "granite-8b-code-instruct-ibm-module",
+        "entryPoint": "ibm_adapter.py",
+        "className": "ModelAdapter",
+        "computeConfig": "granite-8b-code-instruct-ibm-deploy",
+        "description": "Granite-8b-code-instruct IBM API Adapter",
+        "initInputs": [
+          {
+            "type": "Model",
+            "name": "model_entity"
+          },
+          {
+            "type": "String",
+            "name": "ibm_api_key_name"
+          }
+        ],
+        "functions": [
+          {
+            "name": "predict_items",
+            "input": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "List of items to run inference on"
+              }
+            ],
+            "output": [
+              {
+                "type": "Item[]",
+                "name": "items",
+                "description": "The same input images for prediction."
+              },
+              {
+                "type": "Annotation[]",
+                "name": "annotations",
+                "description": "The predicted annotations."
+              }
+            ],
+            "displayName": "Predict Items",
+            "displayIcon": "",
+            "description": "IBM API Granite-8b-code-instruct predict items"
+          },
+          {
+            "name": "predict_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": ""
+              },
+              {
+                "type": "Json",
+                "name": "filters",
+                "description": "Dataloop Filter DQL"
+              }
+            ],
+            "output": [
+            ],
+            "displayName": "Predict Dataset",
+            "displayIcon": "",
+            "description": "Function to run IBM API Granite-8b-code-instruct inference on a dataset"
+          },
+          {
+            "name": "evaluate_model",
+            "computeConfig": "deeplab-train-evaluate",
+            "input": [
+              {
+                "type": "Model",
+                "name": "model",
+                "description": "Dataloop Model Entity"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "Json",
+                "name": "filters",
+                "description": "Dataloop Filter DQL"
+              }
+            ],
+            "output": [
+              {
+                "type": "Model",
+                "name": "model",
+                "description": "Dataloop Model Entity"
+              },
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              }
+            ],
+            "displayName": "Evaluate a Model",
+            "displayIcon": "",
+            "description": "Function to evaluate IBM API Granite-8b-code-instruct model performance"
+          }
+        ]
+      }
+    ],
+    "models": [
+      {
+        "name": "granite-8b-code-instruct-ibm",
+        "moduleName": "granite-8b-code-instruct-ibm-module",
+        "scope": "project",
+        "status": "pre-trained",
+        "configuration": {
+          "model_id": "ibm/granite-8b-code-instruct",
+          "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
+          "min_new_tokens": 0,
+          "max_new_tokens": 200,
+          "stop_sequences": [],
+          "project_id": "",
+          "region": ""
+        },
+        "description": "The Granite-8b-code-instruct model offers advanced capabilities for code generation and instruction-based tasks, designed to assist developers with programming and coding challenges."
+      }
+    ]
+  }
+}
