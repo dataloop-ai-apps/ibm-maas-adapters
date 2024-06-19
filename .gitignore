@@ -330,6 +330,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,python,pycharm,linux
 
 
-.idea
+.idea/
 main.py
 ibm-sdk.py
