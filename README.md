@@ -56,9 +56,9 @@ Insert your `project-id` and `region` and click `Save`
 * In `init inputs value`, edit `ibm_api_key_name` and insert your secret name. In `Secrets & Integrations` insert
   your secret by choosing from the options list.
 
-![Get API Key and Endpoint URL](assets/insert secret.png)
+![Get API Key and Endpoint URL](assets/insert-secret.png)
 
-![Get API Key and Endpoint URL](assets/insert secret name.png)
+![Get API Key and Endpoint URL](assets/insert-secret-name.png)
 
 
 After following these steps, you be able to use Azure Serverless API models via Dataloop Platform.
