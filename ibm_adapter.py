@@ -16,12 +16,15 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError(f"Missing API key: {ibm_api_key_name}")
         logger.info(f"Using secret name: {ibm_api_key_name}")
 
-        self.ibm_project_id = self.model_entity.configuration.get("project_id", None)
+        super().__init__(model_entity)
+
+    def load(self, local_path, **kwargs):
+        self.ibm_project_id = self.configuration.get("project_id", None)
         if self.ibm_project_id is None:
             raise ValueError("You must provide project id matched to your api key. "
                              "Add the project id to the model's configuration under 'project_id'.")
 
-        self.ibm_region = self.model_entity.configuration.get("region", None)
+        self.ibm_region = self.configuration.get("region", None)
         if self.ibm_region is None:
             raise ValueError("Region not specified in the configuration. Please add a valid region code "
                              "to the model's configuration under 'region'.")
@@ -33,9 +36,6 @@ class ModelAdapter(dl.BaseModelAdapter):
 
         logger.info(f"Using IBM Cloud region: {self.ibm_region}")
 
-        super().__init__(model_entity)
-
-    def load(self, local_path, **kwargs):
         # Create access token
         resp = requests.post('https://iam.cloud.ibm.com/identity/token',
                              headers={'Content-Type': 'application/x-www-form-urlencoded'},
