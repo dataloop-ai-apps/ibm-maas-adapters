@@ -1,7 +1,7 @@
 {
   "name": "ibm-api-granite-13b-chat-v2",
   "displayName": "Granite-13b-chat-v2 IBM API",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scope": "public",
   "description": "Granite-13b-chat-v2 from IBM API - Requires API Key and Project id",
   "attributes": {
@@ -13,7 +13,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/ibm-maas-adapters.git",
-    "gitTag": "0.0.2"
+    "gitTag": "0.0.3"
   },
   "components": {
     "computeConfigs": [
