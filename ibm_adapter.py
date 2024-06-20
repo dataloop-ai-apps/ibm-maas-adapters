@@ -6,7 +6,7 @@ import json
 import ast
 import os
 
-logger = logging.getLogger("AzureAI Adapter")
+logger = logging.getLogger("IBM-API Adapter")
 
 
 class ModelAdapter(dl.BaseModelAdapter):
@@ -15,33 +15,34 @@ class ModelAdapter(dl.BaseModelAdapter):
         if self.api_key is None:
             raise ValueError(f"Missing API key: {ibm_api_key_name}")
         logger.info(f"Using secret name: {ibm_api_key_name}")
-        super().__init__(model_entity)
 
-    def load(self, local_path, **kwargs):
-        self.project_id = self.configuration.get("project_id", None)
-        if self.project_id is None:
+        self.ibm_project_id = self.configuration.get("project_id", None)
+        if self.ibm_project_id is None:
             raise ValueError("You must provide project id matched to your api key. "
                              "Add the project id to the model's configuration under 'project_id'.")
 
-        self.region = self.configuration.get("region", None)
-        if self.region is None:
+        self.ibm_region = self.configuration.get("region", None)
+        if self.ibm_region is None:
             raise ValueError("Region not specified in the configuration. Please add a valid region code "
                              "to the model's configuration under 'region'.")
-        elif self.region not in ["us-south", "eu-de", "eu-gb", "jp-osa", "br-sao", "au-syd", "jp-tok", "ca-tor",
-                                 "us-east"]:
-            raise ValueError(f"Unsupported region code '{self.region}' specified. "
+        elif self.ibm_region not in ["us-south", "eu-de", "eu-gb", "jp-osa", "br-sao", "au-syd", "jp-tok", "ca-tor",
+                                     "us-east"]:
+            raise ValueError(f"Unsupported region code '{self.ibm_region}' specified. "
                              "Supported regions: us-south, eu-de, eu-gb, jp-osa, br-sao, au-syd, jp-tok, "
                              "ca-tor, us-east")
 
-        logger.info(f"Using IBM Cloud region: {self.region}")
+        logger.info(f"Using IBM Cloud region: {self.ibm_region}")
 
+        super().__init__(model_entity)
+
+    def load(self, local_path, **kwargs):
         # Create access token
         resp = requests.post('https://iam.cloud.ibm.com/identity/token',
                              headers={'Content-Type': 'application/x-www-form-urlencoded'},
                              data=f'grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey={self.api_key}')
         self.access_token = resp.json()['access_token']
 
-        self.conn_watsonx = http.client.HTTPSConnection(f"{self.region}.ml.cloud.ibm.com")
+        self.conn_watsonx = http.client.HTTPSConnection(f"{self.ibm_region}.ml.cloud.ibm.com")
 
     def prepare_item_func(self, item: dl.Item):
         if ('json' not in item.mimetype or
@@ -82,13 +83,13 @@ class ModelAdapter(dl.BaseModelAdapter):
                 payload = {"model_id": self.configuration.get("model_id"),
                            "input": system_prompt + "Input: " + question + "  Output:",
                            "parameters": {
-                               "decoding_method": "greedy",
+                               "decoding_method": "greedy",  # decoding_method should be one of sample greedy
                                "max_new_tokens": self.configuration.get("max_new_tokens", 200),
                                "min_new_tokens": self.configuration.get("min_new_tokens", 0),
                                "stop_sequences": self.configuration.get("stop_sequences", []),
                                "repetition_penalty": 1
                            },
-                           "project_id": self.project_id
+                           "project_id": self.ibm_project_id
                            }
                 str_payload = json.dumps(payload)
 
@@ -103,10 +104,11 @@ class ModelAdapter(dl.BaseModelAdapter):
 
                 data = ast.literal_eval(res.read().decode("UTF-8"))
 
-                full_answer = ""
-                for chunk in data.get('results'):
+                generated_text_chunks = list()
+                for chunk in data.get('results', list()):
                     if chunk is not None:
-                        full_answer += chunk.get('generated_text')
+                        generated_text_chunks.append(chunk.get('generated_text', ''))
+                full_answer = ' '.join(generated_text_chunks)
 
                 collection.add(
                     annotation_definition=dl.FreeText(text=full_answer),
