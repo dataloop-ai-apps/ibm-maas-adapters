@@ -16,12 +16,12 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError(f"Missing API key: {ibm_api_key_name}")
         logger.info(f"Using secret name: {ibm_api_key_name}")
 
-        self.ibm_project_id = self.configuration.get("project_id", None)
+        self.ibm_project_id = self.model_entity.configuration.get("project_id", None)
         if self.ibm_project_id is None:
             raise ValueError("You must provide project id matched to your api key. "
                              "Add the project id to the model's configuration under 'project_id'.")
 
-        self.ibm_region = self.configuration.get("region", None)
+        self.ibm_region = self.model_entity.configuration.get("region", None)
         if self.ibm_region is None:
             raise ValueError("Region not specified in the configuration. Please add a valid region code "
                              "to the model's configuration under 'region'.")
