@@ -1,7 +1,7 @@
 {
   "name": "ibm-api-llama-3-70b-instruct",
   "displayName": "Llama-3-70b-instruct IBM API",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "scope": "public",
   "description": "Llama-3-70b-instruct from IBM API - Requires API Key and Project id",
   "attributes": {
@@ -13,7 +13,7 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/ibm-maas-adapters.git",
-    "gitTag": "0.0.5"
+    "gitTag": "0.0.6"
   },
 
   "components": {
