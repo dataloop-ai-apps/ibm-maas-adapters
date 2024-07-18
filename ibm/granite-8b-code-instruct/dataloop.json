@@ -1,11 +1,13 @@
 {
   "name": "ibm-api-granite-8b-code-instruct",
-  "displayName": "Granite-8b-code-instruct IBM API",
+  "displayName": "granite-8b-code-instruct",
   "version": "0.0.3",
   "scope": "public",
-  "description": "Granite-8b-code-instruct from IBM API - Requires API Key and Project id",
+  "description": "granite-8b-code-instruct from IBM API - Requires API Key and Project id",
   "attributes": {
     "Provider": "IBM",
+    "Deployed By": "IBM",
+    "Media Type": "Text",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"

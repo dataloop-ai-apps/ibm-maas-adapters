@@ -5,7 +5,9 @@
   "scope": "public",
   "description": "Mixtral-8x7b-instruct-v01 from IBM API - Requires API Key and Project id",
   "attributes": {
-    "Provider": "IBM",
+    "Provider": "MistralAI",
+    "Deployed By": "IBM",
+    "Media Type": "Text",
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
