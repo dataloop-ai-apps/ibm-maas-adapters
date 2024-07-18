@@ -1,9 +1,9 @@
 {
   "name": "ibm-api-mixtral-8x7b-instruct-v01",
-  "displayName": "mixtral-8x7b-instruct-v01",
+  "displayName": "Mixtral-8x7b-instruct-v01",
   "version": "0.0.7",
   "scope": "public",
-  "description": "mixtral-8x7b-instruct-v01 from IBM API - Requires API Key and Project id",
+  "description": "Mixtral-8x7b-instruct-v01 from IBM API - Requires API Key and Project id",
   "attributes": {
     "Provider": "MistralAI",
     "Deployed By": "IBM",

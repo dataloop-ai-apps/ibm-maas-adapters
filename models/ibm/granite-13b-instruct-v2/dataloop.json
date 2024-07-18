@@ -1,9 +1,9 @@
 {
   "name": "ibm-api-granite-13b-instruct-v2",
-  "displayName": "granite-13b-instruct-v2",
+  "displayName": "Granite-13b-instruct-v2",
   "version": "0.0.7",
   "scope": "public",
-  "description": "granite-13b-instruct-v2 from IBM API - Requires API Key and Project id",
+  "description": "Granite-13b-instruct-v2 from IBM API - Requires API Key and Project id",
   "attributes": {
     "Provider": "IBM",
     "Deployed By": "IBM",
