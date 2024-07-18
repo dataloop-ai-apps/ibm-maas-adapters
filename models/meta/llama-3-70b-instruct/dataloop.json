@@ -1,11 +1,11 @@
 {
-  "name": "ibm-api-mixtral-8x7b-instruct-v01",
-  "displayName": "Mixtral-8x7b-instruct-v01 IBM API",
-  "version": "0.0.3",
+  "name": "ibm-api-llama-3-8b-instruct",
+  "displayName": "llama-3-8b-instruct",
+  "version": "0.0.7",
   "scope": "public",
-  "description": "Mixtral-8x7b-instruct-v01 from IBM API - Requires API Key and Project id",
+  "description": "llama-3-8b-instruct from IBM API - Requires API Key and Project id",
   "attributes": {
-    "Provider": "MistralAI",
+    "Provider": "Meta",
     "Deployed By": "IBM",
     "Media Type": "Text",
     "Category": "Model",
@@ -15,12 +15,12 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/ibm-maas-adapters.git",
-    "gitTag": "0.0.3"
+    "gitTag": "0.0.7"
   },
   "components": {
     "computeConfigs": [
       {
-        "name": "mixtral-8x7b-instruct-v01-ibm-deploy",
+        "name": "llama-3-8b-instruct-ibm-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -35,11 +35,11 @@
     ],
     "modules": [
       {
-        "name": "mixtral-8x7b-instruct-v01-ibm-module",
+        "name": "llama-3-8b-instruct-ibm-module",
         "entryPoint": "ibm_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "mixtral-8x7b-instruct-v01-ibm-deploy",
-        "description": "Mixtral-8x7b-instruct-v01 IBM API Adapter",
+        "computeConfig": "llama-3-8b-instruct-ibm-deploy",
+        "description": "Llama-3-8b-instruct IBM API Adapter",
         "initInputs": [
           {
             "type": "Model",
@@ -74,7 +74,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "IBM API Mixtral-8x7b-instruct-v01 predict items"
+            "description": "IBM API Llama-3-8b-instruct predict items"
           },
           {
             "name": "predict_dataset",
@@ -90,11 +90,10 @@
                 "description": "Dataloop Filter DQL"
               }
             ],
-            "output": [
-            ],
+            "output": [],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run IBM API Mixtral-8x7b-instruct-v01 inference on a dataset"
+            "description": "Function to run IBM API Llama-3-8b-instruct inference on a dataset"
           },
           {
             "name": "evaluate_model",
@@ -130,19 +129,19 @@
             ],
             "displayName": "Evaluate a Model",
             "displayIcon": "",
-            "description": "Function to evaluate IBM API Mixtral-8x7b-instruct-v01 model performance"
+            "description": "Function to evaluate IBM API Llama-3-8b-instruct model performance"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "mixtral-8x7b-instruct-v01-ibm",
-        "moduleName": "mixtral-8x7b-instruct-v01-ibm-module",
+        "name": "llama-3-8b-instruct-ibm",
+        "moduleName": "llama-3-8b-instruct-ibm-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
-          "model_id": "mistralai/mixtral-8x7b-instruct-v01",
+          "model_id": "meta-llama/llama-3-8b-instruct",
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
           "min_new_tokens": 0,
           "max_new_tokens": 200,
@@ -150,7 +149,7 @@
           "project_id": "",
           "region": ""
         },
-        "description": "The Mixtral-8x7b-instruct-v01 model is designed for instructional tasks, offering robust performance in generating accurate and coherent responses to a wide variety of queries and instructions with advanced natural language processing capabilities."
+        "description": "The Llama-3-8b-instruct model supports summarization, classification, generation, extraction and translation tasks."
       }
     ]
   }

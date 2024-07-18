@@ -1,11 +1,11 @@
 {
-  "name": "ibm-api-codellama-34b-instruct-hf",
-  "displayName": "Codellama-34b-instruct-hf IBM API",
-  "version": "0.0.3",
+  "name": "ibm-api-granite-13b-instruct-v2",
+  "displayName": "granite-13b-instruct-v2",
+  "version": "0.0.7",
   "scope": "public",
-  "description": "Codellama-34b-instruct-hf from IBM API - Requires API Key and Project id",
+  "description": "granite-13b-instruct-v2 from IBM API - Requires API Key and Project id",
   "attributes": {
-    "Provider": "Meta",
+    "Provider": "IBM",
     "Deployed By": "IBM",
     "Media Type": "Text",
     "Category": "Model",
@@ -15,12 +15,12 @@
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/ibm-maas-adapters.git",
-    "gitTag": "0.0.3"
+    "gitTag": "0.0.7"
   },
   "components": {
     "computeConfigs": [
       {
-        "name": "codellama-34b-instruct-hf-ibm-deploy",
+        "name": "granite-13b-instruct-v2-ibm-deploy",
         "runtime": {
           "podType": "regular-xs",
           "concurrency": 10,
@@ -35,11 +35,11 @@
     ],
     "modules": [
       {
-        "name": "codellama-34b-instruct-hf-ibm-module",
+        "name": "granite-13b-instruct-v2-ibm-module",
         "entryPoint": "ibm_adapter.py",
         "className": "ModelAdapter",
-        "computeConfig": "codellama-34b-instruct-hf-ibm-deploy",
-        "description": "Codellama-34b-instruct-hf IBM API Adapter",
+        "computeConfig": "granite-13b-instruct-v2-ibm-deploy",
+        "description": "Granite-13b-instruct-v2 IBM API Adapter",
         "initInputs": [
           {
             "type": "Model",
@@ -74,7 +74,7 @@
             ],
             "displayName": "Predict Items",
             "displayIcon": "",
-            "description": "IBM API Codellama-34b-instruct-hf predict items"
+            "description": "IBM API Granite-13b-instruct-v2 predict items"
           },
           {
             "name": "predict_dataset",
@@ -94,7 +94,7 @@
             ],
             "displayName": "Predict Dataset",
             "displayIcon": "",
-            "description": "Function to run IBM API Codellama-34b-instruct-hf inference on a dataset"
+            "description": "Function to run IBM API Granite-13b-instruct-v2 inference on a dataset"
           },
           {
             "name": "evaluate_model",
@@ -130,29 +130,27 @@
             ],
             "displayName": "Evaluate a Model",
             "displayIcon": "",
-            "description": "Function to evaluate IBM API Codellama-34b-instruct-hf model performance"
+            "description": "Function to evaluate IBM API Granite-13b-instruct-v2 model performance"
           }
         ]
       }
     ],
     "models": [
       {
-        "name": "codellama-34b-instruct-hf-ibm",
-        "moduleName": "codellama-34b-instruct-hf-ibm-module",
+        "name": "granite-13b-instruct-v2-ibm",
+        "moduleName": "granite-13b-instruct-v2-ibm-module",
         "scope": "project",
         "status": "pre-trained",
         "configuration": {
-          "model_id": "codellama/codellama-34b-instruct-hf",
+          "model_id": "ibm/granite-13b-instruct-v2",
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
           "min_new_tokens": 0,
           "max_new_tokens": 200,
-          "stop_sequences": [
-            "Input:"
-          ],
+          "stop_sequences": [],
           "project_id": "",
           "region": ""
         },
-        "description": "The Codellama-34b-instruct-hf model provides advanced natural language processing capabilities, designed for efficient instruction-based text generation and summarization tasks."
+        "description": "The Granite-13b-instruct-v2 model is optimized for instructional tasks, providing clear and accurate guidance for a wide range of queries and instructions with advanced natural language understanding and generation capabilities."
       }
     ]
   }
