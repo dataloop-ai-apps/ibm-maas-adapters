@@ -7,7 +7,7 @@
   "attributes": {
     "Provider": "Meta",
     "Deployed By": "IBM",
-    "Media Type": "Text",
+    "Media Type": ["Text"],
     "Category": "Model",
     "Gen AI": "LLM",
     "NLP": "Conversational"
@@ -37,7 +37,7 @@
     "modules": [
       {
         "name": "llama-3-70b-instruct-ibm-module",
-        "entryPoint": "ibm_adapter.py",
+        "entryPoint": "models/ibm_adapter.py",
         "className": "ModelAdapter",
         "computeConfig": "llama-3-70b-instruct-ibm-deploy",
         "description": "Llama-3-70b-instruct IBM API Adapter",
@@ -95,42 +95,6 @@
             "displayName": "Predict Dataset",
             "displayIcon": "",
             "description": "Function to run IBM API Llama-3-70b-instruct inference on a dataset"
-          },
-          {
-            "name": "evaluate_model",
-            "computeConfig": "deeplab-train-evaluate",
-            "input": [
-              {
-                "type": "Model",
-                "name": "model",
-                "description": "Dataloop Model Entity"
-              },
-              {
-                "type": "Dataset",
-                "name": "dataset",
-                "description": "Dataloop Dataset Entity"
-              },
-              {
-                "type": "Json",
-                "name": "filters",
-                "description": "Dataloop Filter DQL"
-              }
-            ],
-            "output": [
-              {
-                "type": "Model",
-                "name": "model",
-                "description": "Dataloop Model Entity"
-              },
-              {
-                "type": "Dataset",
-                "name": "dataset",
-                "description": "Dataloop Dataset Entity"
-              }
-            ],
-            "displayName": "Evaluate a Model",
-            "displayIcon": "",
-            "description": "Function to evaluate IBM API Llama-3-70b-instruct model performance"
           }
         ]
       }
@@ -146,6 +110,7 @@
           "system_prompt": "You are a helpful and a bit cynical assistant. Give relevant and short answers, if you dont know the answer just say it, dont make up an answer",
           "min_new_tokens": 0,
           "max_new_tokens": 200,
+          "repetition_penalty": 1,
           "stop_sequences": [],
           "project_id": "",
           "region": ""

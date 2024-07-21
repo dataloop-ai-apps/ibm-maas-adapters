@@ -24,13 +24,10 @@ class ModelAdapter(dl.BaseModelAdapter):
             raise ValueError("You must provide project id matched to your api key. "
                              "Add the project id to the model's configuration under 'project_id'.")
 
-        self.ibm_region = self.configuration.get("region", None)
-        if self.ibm_region is None:
-            raise ValueError("Region not specified in the configuration. Please add a valid region code "
-                             "to the model's configuration under 'region'.")
-        elif self.ibm_region not in ["us-south", "eu-de", "eu-gb", "jp-osa", "br-sao", "au-syd", "jp-tok", "ca-tor",
-                                     "us-east"]:
-            raise ValueError(f"Unsupported region code '{self.ibm_region}' specified. "
+        self.ibm_region = self.configuration.get("region", "")
+        if self.ibm_region not in ["us-south", "eu-de", "eu-gb", "jp-osa", "br-sao", "au-syd", "jp-tok", "ca-tor",
+                                   "us-east"]:
+            raise ValueError(f"Please add a valid region code to the model's configuration under 'region'. "
                              "Supported regions: us-south, eu-de, eu-gb, jp-osa, br-sao, au-syd, jp-tok, "
                              "ca-tor, us-east")
 
@@ -83,11 +80,12 @@ class ModelAdapter(dl.BaseModelAdapter):
                 payload = {"model_id": self.configuration.get("model_id"),
                            "input": system_prompt + "Input: " + question + "  Output:",
                            "parameters": {
-                               "decoding_method": "greedy",  # decoding_method should be one of sample greedy
+                               "decoding_method": "greedy",  # decoding_method of one of sample should be greedy
                                "max_new_tokens": self.configuration.get("max_new_tokens", 200),
                                "min_new_tokens": self.configuration.get("min_new_tokens", 0),
                                "stop_sequences": self.configuration.get("stop_sequences", []),
-                               "repetition_penalty": 1
+                               "repetition_penalty": self.configuration.get("repetition_penalty", 1)
+                               # Penalize repetitive text, reducing the likelihood of the model generating the same token. '1' means no penalty.
                            },
                            "project_id": self.ibm_project_id
                            }
@@ -103,12 +101,7 @@ class ModelAdapter(dl.BaseModelAdapter):
                     raise Exception(f"Response from client failed! {res.read()}")
 
                 data = ast.literal_eval(res.read().decode("UTF-8"))
-
-                generated_text_chunks = list()
-                for chunk in data.get('results', list()):
-                    if chunk is not None:
-                        generated_text_chunks.append(chunk.get('generated_text', ''))
-                full_answer = ' '.join(generated_text_chunks)
+                full_answer = data.get('results')[0].get('generated_text', '')
 
                 collection.add(
                     annotation_definition=dl.FreeText(text=full_answer),
@@ -124,7 +117,6 @@ class ModelAdapter(dl.BaseModelAdapter):
 
 
 if __name__ == '__main__':
-    dl.setenv('rc')
     ibm_api_key_name = ''
     model = dl.models.get(model_id='')
     item = dl.items.get(item_id='')
