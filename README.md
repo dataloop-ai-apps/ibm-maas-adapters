@@ -1,25 +1,25 @@
 # IBM Watsonx as a Service - Model Adapters
 
-This repository contains the code for Dataloop model adapters that invoke models served in IBM via their API.
+This repository contains the code for DDOE model adapters that invoke models served in IBM via their API.
 
 More information on IBM Watsonx as a Service can be
 found [here](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/welcome-main.html?context=wx&audience=wdp).
 
 The apps in this repository are designed to interface with IBM models served via API endpoints. These adapters
-facilitate the integration and interaction with IBM's machine learning models and Dataloop platform.
+facilitate the integration and interaction with IBM's machine learning models and DDOE platform.
 
-To use this models in Dataloop Platform you'll need the following:
+To use this models in DDOE Platform you'll need the following:
 
-1. **Dataloop Account**
+1. **DDOE Account**
 2. **IBM Cloud Account**: Access to IBM Cloud services is required to deploy and manage these models.
 3. **API Key**: Can be created in your IBM Account.
 4. **Project id** : A valid id of a project in your IBM account.
 
-## Install in Dataloop Platform
+## Install in DDOE Platform
 
-Once you have an API key and a Url you can access and get a response from your model in Dataloop platform.
+Once you have an API key and a Url you can access and get a response from your model in DDOE platform.
 
-### 1. Install the model from Dataloop Marketplace
+### 1. Install the model from DDOE Marketplace
 
 Go to Marketplace, Models tab, and search for the requested model (IBM and Model's name) and install:
 
@@ -61,4 +61,4 @@ Insert your `project-id` and `region` and click `Save`
 ![Get API Key and Endpoint URL](assets/insert-secret-name.png)
 
 
-After following these steps, you be able to use Azure Serverless API models via Dataloop Platform.
+After following these steps, you be able to use Azure Serverless API models via DDOE Platform.
